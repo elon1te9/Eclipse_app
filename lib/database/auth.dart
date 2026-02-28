@@ -4,16 +4,28 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class AuthService {
   final Supabase _supabase = Supabase.instance;
 
-  Future<LocalUser?> signIn(String email, String password) async {
+  Future<({LocalUser? user, String? error})> signIn(
+    String email,
+    String password,
+  ) async {
     try {
-      AuthResponse authResponse = await _supabase.client.auth
-          .signInWithPassword(email: email, password: password);
+      final authResponse = await _supabase.client.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
 
-      User user = authResponse.user!;
-
-      return LocalUser.fromSupabase(user);
+      final user = authResponse.user;
+      if (user == null) {
+        return (
+          user: null,
+          error: 'Пользователь не найден или сессия не создана',
+        );
+      }
+      return (user: LocalUser.fromSupabase(user), error: null);
+    } on AuthException catch (e) {
+      return (user: null, error: e.message);
     } catch (e) {
-      return null;
+      return (user: null, error: 'Неизвестная ошибка: $e');
     }
   }
 

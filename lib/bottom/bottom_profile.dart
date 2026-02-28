@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:eclipce_app/database/users/user_table.dart';
 import 'package:path/path.dart' as path;
 import 'package:eclipce_app/database/storage/storage.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _BottomProfilePageState extends State<BottomProfilePage> {
   dynamic docs;
   TextEditingController fullnameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  UserTable userTable = UserTable();
 
   Future<void> getUserById() async {
     try {
@@ -89,7 +91,12 @@ class _BottomProfilePageState extends State<BottomProfilePage> {
                 alignment: Alignment.centerRight,
                 height: MediaQuery.of(context).size.height * 0.04,
                 width: MediaQuery.of(context).size.width * 0.5,
-                child: IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+                child: IconButton(
+                  onPressed: () async {
+                    await selectedImageGallery();
+                  },
+                  icon: Icon(Icons.edit),
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.2,
@@ -181,7 +188,30 @@ class _BottomProfilePageState extends State<BottomProfilePage> {
                       Color.fromARGB(156, 27, 12, 34),
                     ),
                   ),
-                  onPressed: () async {},
+                  onPressed: () async {
+                    await uploadImage();
+                    showDialog(
+                      context: context,
+                      builder: (context) => Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.deepPurple,
+                        ),
+                      ),
+                    );
+                    await Future.delayed(Duration(seconds: 2));
+                    await downloadUrl();
+
+                    await userTable.updateImage(url!, user_id);
+                    
+                    Navigator.pop(context);
+                    
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Сохранено успешно!'),
+                        backgroundColor: Color.fromARGB(156, 27, 12, 34),
+                      ),
+                    );
+                  },
                   child: Text("Сохранить"),
                 ),
               ),

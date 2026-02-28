@@ -110,22 +110,23 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                 ),
                 onPressed: () async {
-                  if (emailController.text.isNotEmpty &&
-                      passController.text.isNotEmpty) {
-                    var user = await authService.signIn(
-                      emailController.text,
-                      passController.text,
-                    );
+                  final email = emailController.text.trim();
+                  final pass = passController.text;
 
-                    if (user != null) {
+                  if (email.isNotEmpty && pass.isNotEmpty) {
+                    final result = await authService.signIn(email, pass);
+
+                    if (result.user != null) {
                       final prefs = await SharedPreferences.getInstance();
                       await prefs.setBool('isLoggedIn', true);
                       Navigator.popAndPushNamed(context, '/');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Пользователь не найден"),
-                          backgroundColor: Color.fromARGB(156, 27, 12, 34),
+                        SnackBar(
+                          content: Text(
+                            result.error ?? "Пользователь не найден",
+                          ),
+                          backgroundColor: const Color.fromARGB(156,27,12,34),
                         ),
                       );
                     }

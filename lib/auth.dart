@@ -126,7 +126,12 @@ class _AuthPageState extends State<AuthPage> {
                           content: Text(
                             result.error ?? "Пользователь не найден",
                           ),
-                          backgroundColor: const Color.fromARGB(156,27,12,34),
+                          backgroundColor: const Color.fromARGB(
+                            156,
+                            27,
+                            12,
+                            34,
+                          ),
                         ),
                       );
                     }

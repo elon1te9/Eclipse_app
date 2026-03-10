@@ -37,4 +37,15 @@ class UserTable {
       return;
     }
   }
+
+  Future<void> updateFullname(String name, String user_id) async {
+    try {
+      await supabase.client
+          .from('users')
+          .update({'fullname': name})
+          .eq('id', user_id);
+    } catch (e) {
+      return;
+    }
+  }
 }

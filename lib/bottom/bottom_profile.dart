@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:eclipce_app/database/auth.dart';
 import 'package:eclipce_app/database/users/user_table.dart';
 import 'package:path/path.dart' as path;
 import 'package:eclipce_app/database/storage/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class BottomProfilePage extends StatefulWidget {
@@ -24,6 +26,7 @@ class _BottomProfilePageState extends State<BottomProfilePage> {
   TextEditingController fullnameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   UserTable userTable = UserTable();
+  AuthService authService = AuthService();  
 
   Future<void> getUserById() async {
     try {
@@ -268,6 +271,28 @@ class _BottomProfilePageState extends State<BottomProfilePage> {
                   child: Text("Сохранить"),
                 ),
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    
+                    foregroundColor: WidgetStatePropertyAll(
+                      Colors.deepPurple,
+                    ),
+                  ),
+                  onPressed: () async {
+                    await authService.logOut();
+
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.setBool('isLoggedIn', false);
+
+                    Navigator.popAndPushNamed(context, '/');
+                  },
+                  child: Text("Выйти"),
+                ),
+              ),
+
             ],
           ),
         ),

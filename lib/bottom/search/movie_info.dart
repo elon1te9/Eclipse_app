@@ -1,7 +1,6 @@
 import 'package:easy_stars/easy_stars.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:video_player/video_player.dart';
 
 class MovieInfoPage extends StatefulWidget {
@@ -14,8 +13,6 @@ class MovieInfoPage extends StatefulWidget {
 
 class _MovieInfoPageState extends State<MovieInfoPage> {
   late FlickManager flickManager;
-  double _userRating = 0.0;
-  bool _isExpanded = false;
 
   @override
   void initState() {
@@ -37,146 +34,160 @@ class _MovieInfoPageState extends State<MovieInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.docs['name'])),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            FlickVideoPlayer(flickManager: flickManager),
-
-            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-
-            Title(
-              color: Colors.white,
-              child: Text(
-                widget.docs['name'],
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20),
-              ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FlickVideoPlayer(flickManager: flickManager),
+          Title(
+            color: Colors.white,
+            child: Text(
+              widget.docs['name'],
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
-
-            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.3,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(
-                    const Color.fromRGBO(223, 213, 235, 100),
-                  ),
-                  foregroundColor: WidgetStatePropertyAll(
-                    Color.fromARGB(156, 27, 12, 34),
-                  ),
+          ),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                  const Color.fromRGBO(223, 213, 235, 100),
                 ),
-                onPressed: () async {},
-                child: Text("Смотреть"),
+                foregroundColor: WidgetStatePropertyAll(
+                  Color.fromARGB(156, 27, 12, 34),
+                ),
               ),
+              onPressed: () async {},
+              child: Text("Смотреть"),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.bookmark, size: 40),
+                  ),
+                  Text('В избранное'),
+                ],
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+              Column(
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.visibility, size: 40),
+                  ),
+                  Text('Просмотрено'),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
-            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Text(
+              widget.docs['descriptiion'],
+              maxLines: 5,
+              textAlign: TextAlign.justify,
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+          Container(
+            alignment: Alignment.centerRight,
+            width: MediaQuery.of(context).size.width * 0.8,
+            child: InkWell(
+              child: Text(
+                'Подробнее >',
+                style: TextStyle(color: Colors.deepPurple),
+              ),
+              onTap: () async {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: 600,
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                top: 8.0,
+                                left: 8.0,
+                              ),
+                              child: IconButton(
+                                icon: Icon(Icons.close),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              widget.docs['name'],
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              child: Text(
+                                widget.docs['descriptiion'],
+                                style: TextStyle(fontSize: 15),
+                                textAlign: TextAlign.justify,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
-            Row(
+          Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.1,
+            decoration: (BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.3),
+              borderRadius: BorderRadius.circular(20),
+            )),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.bookmark, size: 20),
-                    ),
-                    Text(
-                      "В избранное",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 10),
-                    ),
-                  ],
+                Text(
+                  double.parse(widget.docs['stars'].toString()).toString(),
+                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.1),
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.visibility, size: 20),
-                    ),
-                    Text(
-                      "Просмотрено",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 10),
+                    Text('Общая оценка', style: TextStyle(fontSize: 18)),
+                    EasyStarsRating(
+                      initialRating: double.parse(
+                        widget.docs['stars'].toString(),
+                      ),
+                      filledColor: Colors.deepPurpleAccent,
                     ),
                   ],
                 ),
               ],
             ),
-
-            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Text(
-                widget.docs['descriptiion'],
-                maxLines: _isExpanded ? null : 5,
-                overflow: _isExpanded ? null : TextOverflow.ellipsis,
-              ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-            Container(
-              alignment: Alignment.centerRight,
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: InkWell(
-                child: Text(
-                  _isExpanded ? 'Свернуть' : 'Подробнее >',
-                  style: TextStyle(color: Colors.deepPurple),
-                ),
-                onTap: () {
-                  setState(() {
-                    _isExpanded = !_isExpanded;
-                  });
-                },
-              ),
-            ),
-
-            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-
-            Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              decoration: BoxDecoration(
-                color: Colors.deepPurple.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.docs['stars'].toString(),
-                    style: TextStyle(
-                      fontSize: 55,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(width: MediaQuery.of(context).size.width * 0.1),
-                  Column(
-                    children: [
-                      Text(
-                        'Ваша оценка',
-                        style: TextStyle(fontSize: 15, color: Colors.white),
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.005),
-                      EasyStarsRating(
-                        initialRating: _userRating,
-                        filledColor: Colors.deepPurple,
-                        emptyColor: Colors.white,
-                        onRatingChanged: (rating) {
-                          setState(() {
-                            _userRating = rating;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

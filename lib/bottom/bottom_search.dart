@@ -20,6 +20,9 @@ class _BottomSearchPageState extends State<BottomSearchPage> {
   @override
   void initState() {
     super.initState();
+    searchController.addListener(() {
+      setState(() {});
+    });
 
     favoriteTable.loadFavorites(user_id).then((_) {
       setState(() {});
@@ -30,17 +33,42 @@ class _BottomSearchPageState extends State<BottomSearchPage> {
     bool isFavorite = favoriteTable.isFavourite(docs['id']);
 
     return ListTile(
+      isThreeLine: true,
       title: Column(
         children: [
-          Text(docs['name'], maxLines: 1),
-          EasyStarsRating(
-            initialRating: double.parse(docs['stars'].toString()),
-            filledColor: Colors.deepPurple,
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Text(docs['name'], style: TextStyle(fontSize: 16)),
+          ),
+
+          Row(
+            children: [
+              EasyStarsRating(
+                initialRating: double.parse(docs['stars'].toString()),
+                filledColor: Colors.deepPurple,
+                sizeVariant: StarSizeVariant.small,
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.02),
+              Text(
+                double.parse(docs['stars'].toString()).toString(),
+                style: TextStyle(fontSize: 13),
+              ),
+            ],
           ),
         ],
       ),
-      subtitle: Text(docs['descriptiion'], maxLines: 3),
-      leading: Image.network(docs['image']),
+
+      subtitle: Container(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          docs['descriptiion'],
+          style: TextStyle(fontSize: 12),
+          maxLines: 3,
+        ),
+      ),
+
+      leading: Image.network(docs['image'], fit: BoxFit.cover),
+
       trailing: IconButton(
         onPressed: () async {
           if (isFavorite) {
@@ -72,12 +100,7 @@ class _BottomSearchPageState extends State<BottomSearchPage> {
             filled: true,
             hintText: 'Поиск',
             fillColor: Colors.white10,
-            suffixIcon: IconButton(
-              onPressed: () {
-                setState(() {});
-              },
-              icon: Icon(Icons.search),
-            ),
+            prefixIcon: Icon(Icons.search, color: Colors.white54),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25),
               borderSide: BorderSide(color: Colors.white10),
@@ -89,6 +112,7 @@ class _BottomSearchPageState extends State<BottomSearchPage> {
           ),
         ),
       ),
+
       body: Column(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -103,9 +127,9 @@ class _BottomSearchPageState extends State<BottomSearchPage> {
                     child: CircularProgressIndicator(color: Colors.deepPurple),
                   );
                 }
-                var movie = snapshot.data;
+                var movies = snapshot.data;
                 if (searchController.text.isNotEmpty) {
-                  movie = movie!
+                  movies = movies!
                       .where(
                         (element) => element['name'].toLowerCase().contains(
                           searchController.text.toLowerCase(),
@@ -114,9 +138,9 @@ class _BottomSearchPageState extends State<BottomSearchPage> {
                       .toList();
                 }
                 return ListView.builder(
-                  itemCount: movie!.length,
+                  itemCount: movies!.length,
                   itemBuilder: (context, index) {
-                    return movieTile(context, movie![index]);
+                    return movieTile(context, movies![index]);
                   },
                 );
               },

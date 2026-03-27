@@ -11,6 +11,7 @@ class FavoriteTable {
         'id_user': user_id,
         'id_movie': docs['id'],
       });
+      favourites.add(docs['id']);
     } catch (e) {
       return;
     }
@@ -23,6 +24,7 @@ class FavoriteTable {
           .delete()
           .eq('id_user', user_id)
           .eq('id_movie', docs['id']);
+      favourites.remove(docs['id']);
     } catch (e) {
       return;
     }

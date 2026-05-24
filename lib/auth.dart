@@ -1,4 +1,4 @@
-import 'package:eclipce_app/database/auth.dart';
+import 'package:eclipse_app/database/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

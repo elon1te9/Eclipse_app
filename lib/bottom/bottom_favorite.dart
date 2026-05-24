@@ -1,6 +1,6 @@
 import 'package:easy_stars/easy_stars.dart';
-import 'package:eclipce_app/bottom/search/movie_info.dart';
-import 'package:eclipce_app/database/favourites/favourite.dart';
+import 'package:eclipse_app/bottom/search/movie_info.dart';
+import 'package:eclipse_app/database/favourites/favourite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

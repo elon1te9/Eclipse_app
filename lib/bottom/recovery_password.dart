@@ -1,4 +1,4 @@
-﻿import 'package:eclipce_app/database/auth.dart';
+import 'package:eclipse_app/database/auth.dart';
 import 'package:flutter/material.dart';
 
 class RecoveryPasswordPage extends StatefulWidget {
@@ -104,12 +104,15 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: InkWell(child: Text('Назад'), onTap: () {
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: InkWell(
+                child: Text('Назад'),
+                onTap: () {
                   Navigator.popAndPushNamed(context, '/home');
-                }),
+                },
               ),
+            ),
           ],
         ),
       ),

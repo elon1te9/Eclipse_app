@@ -1,7 +1,7 @@
-import 'package:eclipce_app/bottom/bottom_favorite.dart';
-import 'package:eclipce_app/bottom/bottom_home.dart';
-import 'package:eclipce_app/bottom/bottom_profile.dart';
-import 'package:eclipce_app/bottom/bottom_search.dart';
+import 'package:eclipse_app/bottom/bottom_favorite.dart';
+import 'package:eclipse_app/bottom/bottom_home.dart';
+import 'package:eclipse_app/bottom/bottom_profile.dart';
+import 'package:eclipse_app/bottom/bottom_search.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 

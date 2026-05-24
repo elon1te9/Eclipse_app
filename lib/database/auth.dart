@@ -1,4 +1,4 @@
-import 'package:eclipce_app/database/user.dart';
+import 'package:eclipse_app/database/user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {

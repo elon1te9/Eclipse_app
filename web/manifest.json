@@ -1,11 +1,11 @@
 {
-    "name": "eclipce_app",
-    "short_name": "eclipce_app",
+    "name": "Eclipse App",
+    "short_name": "Eclipse",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Student Flutter movie catalog app with auth, favorites, and a user profile.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:eclipce_app/database/auth.dart';
-import 'package:eclipce_app/database/users/user_table.dart';
+import 'package:eclipse_app/database/auth.dart';
+import 'package:eclipse_app/database/users/user_table.dart';
 import 'package:path/path.dart' as path;
-import 'package:eclipce_app/database/storage/storage.dart';
+import 'package:eclipse_app/database/storage/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +26,7 @@ class _BottomProfilePageState extends State<BottomProfilePage> {
   TextEditingController fullnameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   UserTable userTable = UserTable();
-  AuthService authService = AuthService();  
+  AuthService authService = AuthService();
 
   Future<void> getUserById() async {
     try {
@@ -98,13 +98,11 @@ class _BottomProfilePageState extends State<BottomProfilePage> {
     );
   }
 
-
   @override
   void initState() {
     getUserById();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -276,10 +274,7 @@ class _BottomProfilePageState extends State<BottomProfilePage> {
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    
-                    foregroundColor: WidgetStatePropertyAll(
-                      Colors.deepPurple,
-                    ),
+                    foregroundColor: WidgetStatePropertyAll(Colors.deepPurple),
                   ),
                   onPressed: () async {
                     await authService.logOut();
@@ -292,7 +287,6 @@ class _BottomProfilePageState extends State<BottomProfilePage> {
                   child: Text("Выйти"),
                 ),
               ),
-
             ],
           ),
         ),

@@ -1,5 +1,5 @@
-import 'package:eclipce_app/database/auth.dart';
-import 'package:eclipce_app/database/users/user_table.dart';
+import 'package:eclipse_app/database/auth.dart';
+import 'package:eclipse_app/database/users/user_table.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -252,7 +252,7 @@ class _RegPageState extends State<RegPage> {
                         passwordController.text,
                         birthDateController.text,
                         genderController.text,
-                        ''
+                        '',
                       );
 
                       final prefs = await SharedPreferences.getInstance();

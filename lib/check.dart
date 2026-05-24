@@ -1,5 +1,5 @@
-import 'package:eclipce_app/auth.dart';
-import 'package:eclipce_app/home.dart';
+import 'package:eclipse_app/auth.dart';
+import 'package:eclipse_app/home.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,6 +20,7 @@ class _CheckPageState extends State<CheckPage> {
       _isLoggedIn = isLoggedIn;
     });
   }
+
   @override
   void initState() {
     _checkAuth();
@@ -28,6 +29,6 @@ class _CheckPageState extends State<CheckPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _isLoggedIn ?  HomePage() :  AuthPage();
+    return _isLoggedIn ? HomePage() : AuthPage();
   }
 }

@@ -3,8 +3,8 @@
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
-.pub/
 .pub-cache/
+.pub/
 build/
 coverage/
 
@@ -16,18 +16,18 @@ coverage/
 # Android
 android/local.properties
 android/key.properties
-android/app/debug
-android/app/profile
-android/app/release
+android/app/debug/
+android/app/profile/
+android/app/release/
 *.jks
 *.keystore
 
-# iOS / macOS
+# iOS
 ios/Flutter/Generated.xcconfig
 ios/Flutter/flutter_export_environment.sh
 ios/Flutter/.last_build_id
-ios/Flutter/App.framework
-ios/Flutter/Flutter.framework
+ios/Flutter/App.framework/
+ios/Flutter/Flutter.framework/
 ios/Flutter/Flutter.podspec
 ios/Flutter/ephemeral/
 ios/Flutter/app.flx
@@ -37,14 +37,10 @@ ios/Pods/
 ios/.symlinks/
 ios/DerivedData/
 ios/Runner/GeneratedPluginRegistrant.*
+
+# macOS
 macos/Flutter/ephemeral/
 macos/Pods/
-**/xcuserdata/
-**/*.mode1v3
-**/*.mode2v3
-**/*.moved-aside
-**/*.pbxuser
-**/*.perspectivev3
 
 # Windows / Linux generated files
 windows/flutter/generated_plugin_registrant.cc
@@ -53,6 +49,14 @@ windows/flutter/generated_plugins.cmake
 linux/flutter/generated_plugin_registrant.cc
 linux/flutter/generated_plugin_registrant.h
 linux/flutter/generated_plugins.cmake
+
+# Xcode / Apple IDE
+**/xcuserdata/
+**/*.mode1v3
+**/*.mode2v3
+**/*.moved-aside
+**/*.pbxuser
+**/*.perspectivev3
 
 # IDE
 .idea/
